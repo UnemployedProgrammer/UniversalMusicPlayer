@@ -1,0 +1,5 @@
+{
+  "universalmusicplayer.gui.vlcinstallbtn": "Install VLC for %s",
+  "universalmusicplayer.gui.dismiss": "Dismiss",
+  "universalmusicplayer.gui.vlcinstallcancel.tooltip": "This will disable Universal Music Player Library (and its child mods)."
+}

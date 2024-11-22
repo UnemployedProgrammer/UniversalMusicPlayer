@@ -1,0 +1,11 @@
+/playsound minecraft:block.creaking_heart.break
+/stopsound Player408
+/playsound minecraft:music.creative music Player408
+/stopsound Player408
+/playsound minecraft:music.menu music Player408
+/seed
+/playsound minecraft:music.menu music Player408
+/stopsound Player408
+/playsound minecraft:music.menu music Player408
+/time set day#
+/time set day

@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "universalmusicplayer",
+  "version": "${version}",
+  "name": "UniversalMusicPlayer",
+  "description": "Used to play music files easily on client.",
+  "authors": [],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/universalmusicplayer/icon.png",
+  "environment": "client",
+  "mixins": [
+    "universal_music_player.mixins.client.json"
+  ],
+  "entrypoints": {
+    "client": [
+      "de.sebastian.universalmusicplayer.client.UniversalMusicPlayerClient"
+    ],
+    "main": [
+      "de.sebastian.universalmusicplayer.UniversalMusicPlayer"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
