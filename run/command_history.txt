@@ -9,3 +9,8 @@
 /playsound minecraft:music.menu music Player408
 /time set day#
 /time set day
+/playsound minecraft:music.menu music Player408
+/playsound minecraft:music.menu music Player372
+/stopsound Player408
+/stopsound Player372
+/playsound minecraft:music.menu music Player372

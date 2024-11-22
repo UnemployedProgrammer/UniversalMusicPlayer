@@ -3,6 +3,7 @@ package de.sebastian.universalmusicplayer.client;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 import java.io.File;
+import java.util.UUID;
 
 /**
  * This Class is self-explanatory!
@@ -30,7 +31,7 @@ public class SoundTrackInstance {
      * @return New SoundTrackInstance.
      * */
     public static SoundTrackInstance create(int volume, File soundTrack, Boolean respectsSharedVars_ALL_TOASTS_MUSIC_DUCKING, String name) {
-        SoundTrackInstance instance = new SoundTrackInstance(soundTrack, name, respectsSharedVars_ALL_TOASTS_MUSIC_DUCKING).setInitVol(volume);
+        SoundTrackInstance instance = new SoundTrackInstance(soundTrack, name + "-" + UUID.randomUUID().toString(), respectsSharedVars_ALL_TOASTS_MUSIC_DUCKING).setInitVol(volume);
         if(respectsSharedVars_ALL_TOASTS_MUSIC_DUCKING) {
             SharedVars.RESPECT_TOAST_DUCKING.add(instance);
         }

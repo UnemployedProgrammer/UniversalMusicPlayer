@@ -11,7 +11,7 @@ import java.io.File;
 
 public class TestScreen extends Screen {
 
-    public static SoundTrackInstance soundTrackInstance = SoundTrackInstance.create(10, new File("D:/projects/sounds/musik/test1.mp3"), true, "Test Screen");
+    public static SoundTrackInstance soundTrackInstance = SoundTrackInstance.create(100, new File("D:/projects/sounds/musik/test1.mp3"), true, "Test Screen");
 
     public TestScreen() {
         super(Text.literal("Test Screen"));
@@ -19,6 +19,7 @@ public class TestScreen extends Screen {
 
     @Override
     protected void init() {
+        soundTrackInstance.play();
         ButtonWidget buttonWidget = ButtonWidget.builder(Text.of("Hello World"), (btn) -> {
             // When the button is clicked, we can display a toast to the screen.
             this.client.getToastManager().add(

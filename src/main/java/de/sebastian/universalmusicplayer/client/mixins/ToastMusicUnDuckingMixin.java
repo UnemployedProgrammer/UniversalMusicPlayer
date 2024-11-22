@@ -1,6 +1,8 @@
 package de.sebastian.universalmusicplayer.client.mixins;
 
 import de.sebastian.universalmusicplayer.client.SharedVars;
+import de.sebastian.universalmusicplayer.client.SoundTrackInstance;
+import de.sebastian.universalmusicplayer.client.VolumeFader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.toast.Toast;
 import net.minecraft.client.toast.ToastManager;
@@ -10,6 +12,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+import java.util.Map;
+import java.util.Objects;
 
 @Mixin(targets = "net.minecraft.client.toast.ToastManager$Entry")
 public abstract class ToastMusicUnDuckingMixin {
@@ -25,7 +30,19 @@ public abstract class ToastMusicUnDuckingMixin {
                 SharedVars.MUSIC_CURRENTLY_DUCKED = true;
                 if(SharedVars.ACTIVE_TOAST_COUNT == 0) {
                     SharedVars.MUSIC_CURRENTLY_DUCKED = false;
-                    client.options.getSoundVolumeOption(SoundCategory.MUSIC).setValue(SharedVars.OLD_MINECRAFT_MUSIC_VAL);
+
+                    if(!(client.options.getSoundVolumeOption(SoundCategory.MUSIC).getValue() == 0.0D)) {
+                        VolumeFader.setMinecraftVolumeCubic((int) (SharedVars.OLD_MINECRAFT_MUSIC_VAL * 100));
+                    }
+
+                    for (SoundTrackInstance soundInstance : SharedVars.RESPECT_TOAST_DUCKING) {
+                        for (Map.Entry<String, Integer> stringIntegerEntry : SharedVars.RESPECT_TOAST_DUCKING_OLD_VOLUME.entrySet()) {
+                            if(Objects.equals(soundInstance.getId(), stringIntegerEntry.getKey())) {
+                                VolumeFader.setVolumeCubic(soundInstance.getMediaPlayer(), stringIntegerEntry.getValue());
+                            }
+                        }
+                    }
+                    SharedVars.RESPECT_TOAST_DUCKING_OLD_VOLUME.clear();
                 }
             }
         }
