@@ -12,13 +12,14 @@ public class SoundTrackInstance {
     private File soundTrack;
     private String id;
     private MediaPlayer mediaPlayer;
-    private Boolean destroyed;
+    private Boolean destroyed = false;
     private final Boolean respectsSharedVars_ALL_TOASTS_MUSIC_DUCKING;
 
     private SoundTrackInstance(File soundTrack, String id, Boolean respectsSharedVars_ALL_TOASTS_MUSIC_DUCKING) {
         this.soundTrack = soundTrack;
         this.id = id;
         this.respectsSharedVars_ALL_TOASTS_MUSIC_DUCKING = respectsSharedVars_ALL_TOASTS_MUSIC_DUCKING;
+        this.mediaPlayer = VLCManager.VLCPlayerManager.createPlayerInstance();
     }
 
     /**
@@ -33,6 +34,11 @@ public class SoundTrackInstance {
         if(respectsSharedVars_ALL_TOASTS_MUSIC_DUCKING) {
             SharedVars.RESPECT_TOAST_DUCKING.add(instance);
         }
+        SharedVars.ALL_SOUND_INSTANCES.add(instance);
+        instance.getMediaPlayer().controls().setTime(0);
+        instance.getMediaPlayer().controls().setPosition(0);
+        instance.getMediaPlayer().media().startPaused(soundTrack.getAbsolutePath());
+        System.out.println("Preparing: " + soundTrack.getAbsolutePath());
         return instance;
     }
 
@@ -64,6 +70,18 @@ public class SoundTrackInstance {
             throw new UseDestroyedMediaPlayerExpection(id);
         }
         mediaPlayer.audio().setVolume(volume);
+    }
+
+    public void pause() {
+        mediaPlayer.controls().pause();
+    }
+
+    public void play() {
+        mediaPlayer.controls().play();
+    }
+
+    public void stop() {
+        mediaPlayer.controls().stop();
     }
 
     public Integer getVolume() {
@@ -101,5 +119,9 @@ public class SoundTrackInstance {
         soundTrack = newSoundTrack;
         mediaPlayer.controls().stop();
         mediaPlayer.media().play(newSoundTrack.getAbsolutePath());
+    }
+
+    public String getId() {
+        return id;
     }
 }

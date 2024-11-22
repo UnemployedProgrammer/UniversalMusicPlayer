@@ -6,10 +6,10 @@ import uk.co.caprica.vlcj.player.base.MediaPlayer;
 public class VLCManager {
     public class VLCPlayerManager {
 
-        private MediaPlayerFactory factory;
+        private static MediaPlayerFactory factory;
 
         // Initialize VLC player instance
-        public MediaPlayer createPlayerInstance() {
+        public static MediaPlayer createPlayerInstance() {
             if (factory == null) {
                 factory = new MediaPlayerFactory(); // Creates the media player factory
             }
@@ -17,7 +17,7 @@ public class VLCManager {
         }
 
         // Release the media player instance (deletes player)
-        public void deletePlayerInstance(MediaPlayer mediaPlayer) {
+        public static void deletePlayerInstance(MediaPlayer mediaPlayer) {
             if (mediaPlayer != null) {
                 mediaPlayer.release();
                 mediaPlayer = null;

@@ -7,7 +7,8 @@
   "client": [
     "ToastMusicDuckingMixin",
     "ToastManagerEntryAccessorMixin",
-    "ToastMusicUnDuckingMixin"
+    "ToastMusicUnDuckingMixin",
+    "MinecraftClientMixin"
   ],
   "server": [],
   "injectors": {
