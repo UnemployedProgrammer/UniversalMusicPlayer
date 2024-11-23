@@ -26,12 +26,12 @@ public class ToastMusicDuckingMixin {
             SharedVars.OLD_MINECRAFT_MUSIC_VAL = client.options.getSoundVolumeOption(SoundCategory.MUSIC).getValue();
 
             if(SharedVars.OLD_MINECRAFT_MUSIC_VAL != 0.0D) {
-                VolumeFader.setMinecraftVolumeCubic(20);
+                VolumeFader.setMinecraftVolumeCubic(SharedVars.MINECRAFT_MUSIC_FADE_DOWN);
             }
             for (SoundTrackInstance soundInstance : SharedVars.RESPECT_TOAST_DUCKING) {
                 if(soundInstance.getVolume() != 0) {
                     SharedVars.RESPECT_TOAST_DUCKING_OLD_VOLUME.put(soundInstance.getId(), soundInstance.getVolume());
-                    VolumeFader.setVolumeCubic(soundInstance.getMediaPlayer(), 40);
+                    VolumeFader.setVolumeCubic(soundInstance.getMediaPlayer(), SharedVars.VLC_MUSIC_FADE_DOWN);
                 }
             }
             SharedVars.ACTIVE_TOAST_COUNT++;

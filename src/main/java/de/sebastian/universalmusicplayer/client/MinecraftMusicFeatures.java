@@ -1,5 +1,8 @@
 package de.sebastian.universalmusicplayer.client;
 
+import net.minecraft.client.MinecraftClient;
+import net.minecraft.sound.SoundCategory;
+
 public class MinecraftMusicFeatures {
     //Minecraft Music
 
@@ -54,5 +57,45 @@ public class MinecraftMusicFeatures {
      */
     public static Boolean getUniversalMusicPlayerEnabled() {
         return SharedVars.UNIVERSAL_MUSIC_PLAYER_ENABLED;
+    }
+
+    /**
+     * This stops all current minecraft sounds, including music.
+     */
+    public static void stopCurrentMinecraftSounds() {
+        MinecraftClient.getInstance().getSoundManager().stopAll();
+    }
+
+
+    /**
+     * This locks 'StandardMinecraftMusicEnabled' value in config, so users can't enable/disable it.
+     * @param lockedByModName The name of the mod, which locked the config, helpful for users! Will display like: 'Entry locked by Example Mod!'
+     */
+    public static void setStandardMinecraftMusicLocked(String lockedByModName) {
+        SharedVars.MINECRAFT_MUSIC_ENABLED_LOCK_IN_CONFIG = true;
+        SharedVars.MINECRAFT_MUSIC_ENABLED_LOCKED_BY = lockedByModName;
+    }
+
+    /**
+     * This unlocks 'StandardMinecraftMusicEnabled' value in config, so users can enable/disable it manually.
+     */
+    public static void setStandardMinecraftMusicUnlocked() {
+        MinecraftClient.getInstance().getSoundManager().stopAll();
+    }
+
+    /**
+     * This locks 'ToastMusicDucking' value in config, so users can't enable/disable it.
+     * @param lockedByModName The name of the mod, which locked the config, helpful for users! Will display like: 'Entry locked by Example Mod!'
+     */
+    public static void setToastMusicDuckingLocked(String lockedByModName) {
+        SharedVars.MINECRAFT_TOAST_MUSIC_DUCKING_LOCK_IN_CONFIG = true;
+        SharedVars.MINECRAFT_TOAST_MUSIC_DUCKING_LOCKED_BY = lockedByModName;
+    }
+
+    /**
+     * This unlocks 'ToastMusicDucking' value in config, so users can enable/disable it manually.
+     */
+    public static void setToastMusicDuckingUnlocked() {
+        MinecraftClient.getInstance().getSoundManager().stopAll();
     }
 }

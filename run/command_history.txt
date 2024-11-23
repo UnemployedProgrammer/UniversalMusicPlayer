@@ -14,3 +14,33 @@
 /stopsound Player408
 /stopsound Player372
 /playsound minecraft:music.menu music Player372
+/recipe take @s *
+/recipe give @a minecraft:acacia_boat
+/effect give @s minecraft:night_vision infinite 255 true
+/locate structure minecraft:village_taiga
+/tp @s 1760 ~ -1632
+/tp @s 0 ~ 0
+/time set day
+/place structure minecraft:village_taiga
+/place structure minecraft:shipwreck_beached
+/place structure minecraft:stronghold
+/seed
+/locate structure minecraft:village_snowy
+/tp @s 880 ~ 640
+/locate biome minecraft:jungle
+/tp @s -1205 97 4247
+/gamerule randomTickSpeed 300
+/gamerule randomTickSpeed 3
+/gamerule randomTickSpeed 300
+/gamerule randomTickSpeed 3
+/tp @s 0 ~ 0
+/time set day
+/tp @s 100 ~ 100
+/effect give @s minecraft:night_vision infinite 255 true
+/fill 160 65 46 ~ ~ ~ air replace minecraft:dark_oak_planks
+/gamerule maxCommandForkCount 10000000
+/fill 160 65 46 ~ ~ ~ air replace minecraft:dark_oak_planks
+/gamerule commandModificationBlockLimit 1000000000
+/fill 160 65 46 ~ ~ ~ air replace minecraft:dark_oak_planks
+/time set noon
+/seed

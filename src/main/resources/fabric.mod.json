@@ -4,7 +4,7 @@
   "version": "${version}",
   "name": "UniversalMusicPlayer",
   "description": "Used to play music files easily on client.",
-  "authors": [],
+  "authors": ["1306_sebastian (aka UnemployedProgrammer)"],
   "contact": {},
   "license": "MIT",
   "icon": "assets/universalmusicplayer/icon.png",
@@ -18,11 +18,24 @@
     ],
     "main": [
       "de.sebastian.universalmusicplayer.UniversalMusicPlayer"
-    ]
+    ],
+    "modmenu": [ "de.sebastian.universalmusicplayer.client.ModMenuImpl" ]
   },
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",
     "minecraft": "${minecraft_version}"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+      },
+      "badges": [ "library" ],
+      "update_checker": false,
+      "contact": {
+        "issues": "https://github.com/UnemployedProgrammer/UniversalMusicPlayer/issues",
+        "sources": "https://github.com/UnemployedProgrammer/UniversalMusicPlayer/"
+      }
+    }
   }
 }
