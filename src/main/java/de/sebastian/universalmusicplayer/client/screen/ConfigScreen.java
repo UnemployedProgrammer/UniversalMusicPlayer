@@ -5,15 +5,14 @@ import de.sebastian.universalmusicplayer.client.SharedVars;
 import de.sebastian.universalmusicplayer.client.screen.widget.NumberOnlyTextFieldWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
+import net.minecraft.client.gui.screen.ButtonTextures;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.tooltip.Tooltip;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.gui.widget.SliderWidget;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.gui.widget.*;
 import net.minecraft.client.toast.SystemToast;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
+import net.minecraft.util.Identifier;
 
 import java.util.Objects;
 
@@ -27,6 +26,7 @@ public class ConfigScreen extends Screen {
     private Integer newDuckingVLCMusic = SharedVars.VLC_MUSIC_FADE_DOWN;
 
     private ButtonWidget toastMusicDucking;
+    private TexturedButtonWidget testAudioDucking;
     private ButtonWidget defaultMusic;
     private NumberOnlyTextFieldWidget duckingMinecraft;
     private NumberOnlyTextFieldWidget duckingVLC;
@@ -73,17 +73,33 @@ public class ConfigScreen extends Screen {
     }
 
     private void applyChanges() {
+        if(!(newDefaultMusic == SharedVars.DEFAULT_MINECRAFT_MUSIC_ENABLED)) {
+            SharedVars.DEFAULT_MINECRAFT_MUSIC_ENABLED = newDefaultMusic;
+        }
 
+        if(!(newToastMusicDucking == SharedVars.ALL_TOASTS_MUSIC_DUCKING)) {
+            SharedVars.ALL_TOASTS_MUSIC_DUCKING = newToastMusicDucking;
+        }
+
+        if(!Objects.equals(newDuckingMinecraftMusic, SharedVars.MINECRAFT_MUSIC_FADE_DOWN)) {
+            SharedVars.MINECRAFT_MUSIC_FADE_DOWN = newDuckingMinecraftMusic;
+        }
+
+        if(!Objects.equals(newDuckingVLCMusic, SharedVars.VLC_MUSIC_FADE_DOWN)) {
+            SharedVars.VLC_MUSIC_FADE_DOWN = newDuckingVLCMusic;
+        }
     }
 
     @Override
     protected void init() {
 
-        saveQuitWidget = addDrawableChild(ButtonWidget.builder(Text.literal("Save and Close"), (btn) -> {
+        saveQuitWidget = addDrawableChild(ButtonWidget.builder(Text.translatable("universalmusicplayer.gui.config.save_quit"), (btn) -> {
             if(madeChanges) {
                 this.client.getToastManager().add(
-                        SystemToast.create(this.client, SystemToast.Type.NARRATOR_TOGGLE, Text.translatable("universalmusicplayer.gui.config.esc.not_saved.title"), Text.translatable("universalmusicplayer.gui.config.esc.not_saved"))
+                        SystemToast.create(this.client, SystemToast.Type.NARRATOR_TOGGLE, Text.translatable("universalmusicplayer.gui.config.esc.saved.title"), Text.translatable("universalmusicplayer.gui.config.esc.saved"))
                 );
+                applyChanges();
+                this.client.setScreen(parent);
             }
         }).dimensions(20, height - 30, width - 40, 20).build());
         saveQuitWidget.setTooltip(Tooltip.of(Text.translatable("universalmusicplayer.gui.config.esc.tooltip")));
@@ -98,6 +114,15 @@ public class ConfigScreen extends Screen {
         }).dimensions(width - 120, height / 2 - 60, 100, 20).build());
         if(SharedVars.MINECRAFT_TOAST_MUSIC_DUCKING_LOCK_IN_CONFIG) {
             toastMusicDucking.active = false;
+        }
+
+        testAudioDucking = addDrawableChild(new TexturedButtonWidget(width - 150, height / 2 - 60, 20, 20, new ButtonTextures(Identifier.of("universalmusicplayer", "textures/gui/audio_ducking.png"), Identifier.of("universalmusicplayer", "textures/gui/audio_ducking.png")), (btn) -> {
+            if(!SharedVars.MINECRAFT_TOAST_MUSIC_DUCKING_LOCK_IN_CONFIG) {
+                MinecraftClient.getInstance().setScreen(new TestAudioDucking(this));
+            }
+        }));
+        if(SharedVars.MINECRAFT_TOAST_MUSIC_DUCKING_LOCK_IN_CONFIG) {
+            testAudioDucking.active = false;
         }
 
         defaultMusic = addDrawableChild(ButtonWidget.builder(getTranslatedBoolean(newDefaultMusic), (btn) -> {
@@ -117,11 +142,19 @@ public class ConfigScreen extends Screen {
             updateMadeChangesVar();
         });
 
-        duckingVLC = addDrawableChild(new NumberOnlyTextFieldWidget(width - 120, height / 2, 100, 20, Text.literal("20"), 0, 100));
+        duckingVLC = addDrawableChild(new NumberOnlyTextFieldWidget(width - 120, height / 2, 100, 20, Text.literal("60"), 0, 100));
         duckingVLC.setChangedListener(value -> {
             newDuckingVLCMusic = Math.clamp(duckingVLC.getIntValue(), 0, 100);
             updateMadeChangesVar();
         });
+        duckingVLC.setText(String.valueOf(newDuckingVLCMusic));
+
+        duckingMinecraft = addDrawableChild(new NumberOnlyTextFieldWidget(width - 120, height / 2 + 30, 100, 20, Text.literal("20"), 0, 100));
+        duckingMinecraft.setChangedListener(value -> {
+            newDuckingMinecraftMusic = Math.clamp(duckingMinecraft.getIntValue(), 0, 100);
+            updateMadeChangesVar();
+        });
+        duckingMinecraft.setText(String.valueOf(newDuckingMinecraftMusic));
 
         super.init();
     }
@@ -137,8 +170,10 @@ public class ConfigScreen extends Screen {
 
         blurDisabledValues(context);
 
-        context.drawText(MinecraftClient.getInstance().textRenderer, Text.translatable("universalmusicplayer.config.entry.toast_music_ducking.title"), 40, height / 2 - 55, 0xFFFFFF, false);
-        context.drawText(MinecraftClient.getInstance().textRenderer, Text.translatable("universalmusicplayer.config.entry.default_mc_music.title"), 40, height / 2 - 25, 0xFFFFFF, false);
+        context.drawText(MinecraftClient.getInstance().textRenderer, Text.translatable("universalmusicplayer.config.entry.toast_music_ducking.title"), 40, height / 2 - 50, 0xFFFFFF, false);
+        context.drawText(MinecraftClient.getInstance().textRenderer, Text.translatable("universalmusicplayer.config.entry.default_mc_music.title"), 40, height / 2 - 20, 0xFFFFFF, false);
+        context.drawText(MinecraftClient.getInstance().textRenderer, Text.translatable("universalmusicplayer.config.entry.ducking_vlc.title"), 40, height / 2 + 10, 0xFFFFFF, false);
+        context.drawText(MinecraftClient.getInstance().textRenderer, Text.translatable("universalmusicplayer.config.entry.ducking_mc.title"), 40, height / 2 + 40, 0xFFFFFF, false);
 
         toolTips(context, mouseX, mouseY);
     }
@@ -150,6 +185,14 @@ public class ConfigScreen extends Screen {
 
         if(isMouseBetween(mX, mY, 0, height / 2 - 30, width, height / 2 - 10)) {
             ctx.drawTooltip(MinecraftClient.getInstance().textRenderer, SharedVars.MINECRAFT_MUSIC_ENABLED_LOCK_IN_CONFIG ? Text.literal(Text.translatable("universalmusicplayer.gui.config.entry_disabled").getString().replace("%modname", SharedVars.MINECRAFT_MUSIC_ENABLED_LOCKED_BY)) : Text.translatable("universalmusicplayer.config.entry.default_mc_music"), mX, mY);
+        }
+
+        if(isMouseBetween(mX, mY, 0, height / 2, width, height / 2 + 20)) {
+            ctx.drawTooltip(MinecraftClient.getInstance().textRenderer, Text.translatable("universalmusicplayer.config.entry.ducking_vlc"), mX, mY);
+        }
+
+        if(isMouseBetween(mX, mY, 0, height / 2 + 30, width, height / 2 + 50)) {
+            ctx.drawTooltip(MinecraftClient.getInstance().textRenderer, Text.translatable("universalmusicplayer.config.entry.ducking_mc"), mX, mY);
         }
     }
 

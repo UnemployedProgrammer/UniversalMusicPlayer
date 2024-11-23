@@ -8,7 +8,8 @@
     "ToastMusicDuckingMixin",
     "ToastManagerEntryAccessorMixin",
     "ToastMusicUnDuckingMixin",
-    "MinecraftClientMixin"
+    "MinecraftClientMixin",
+    "DisableMusicMixin"
   ],
   "server": [],
   "injectors": {

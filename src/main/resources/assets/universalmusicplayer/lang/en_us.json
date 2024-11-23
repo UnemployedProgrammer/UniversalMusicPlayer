@@ -2,10 +2,13 @@
   "universalmusicplayer.gui.vlcinstallbtn": "Install VLC for %s",
   "universalmusicplayer.gui.dismiss": "Dismiss",
   "universalmusicplayer.gui.vlcinstallcancel.tooltip": "This will disable Universal Music Player Library (and its child mods).",
+  "universalmusicplayer.gui.config.vlcnotinstalled": "Universal Audio Player is disabled, because VLC is not installed. \n So no configurations can be made!",
 
   "universalmusicplayer.gui.config.title": "Universal Music Player - Configuration",
+  "universalmusicplayer.gui.config.try_ducking": "Try Audio Ducking",
   "universalmusicplayer.gui.config.enabled": "Enabled",
   "universalmusicplayer.gui.config.disabled": "Disabled",
+  "universalmusicplayer.gui.config.save_quit": "Save and Close",
   "universalmusicplayer.gui.config.entry_disabled": "Entry locked by %modname!",
   "universalmusicplayer.gui.config.esc.not_saved": "Your changes weren't saved because you pressed escape.",
   "universalmusicplayer.gui.config.esc.not_saved.title": "Changes not saved!",
@@ -16,5 +19,9 @@
   "universalmusicplayer.config.entry.default_mc_music": "If enabled, default minecraft music can be played.",
   "universalmusicplayer.config.entry.default_mc_music.title": "Default Minecraft Music",
   "universalmusicplayer.config.entry.toast_music_ducking": "If enabled, music volume lowers when a toast appears!",
-  "universalmusicplayer.config.entry.toast_music_ducking.title": "Toast Music Ducking"
+  "universalmusicplayer.config.entry.toast_music_ducking.title": "Toast Music Ducking",
+  "universalmusicplayer.config.entry.ducking_mc": "Adjusts how much the Minecraft music volume is lowered when Toasts appear. (Only valid when Toast Music Ducking is enabled)",
+  "universalmusicplayer.config.entry.ducking_mc.title": "Minecraft Volume Ducking",
+  "universalmusicplayer.config.entry.ducking_vlc": "Adjusts how much the VLC music/sound volume is lowered when Toasts appear. (Only valid when Toast Music Ducking is enabled)",
+  "universalmusicplayer.config.entry.ducking_vlc.title": "VLC Volume Ducking"
 }

@@ -29,6 +29,8 @@ public class UniversalMusicPlayer implements ModInitializer {
                 if(screen instanceof TitleScreen) {
                     if(!(new NativeDiscovery().discover())) {
                         SharedVars.UNIVERSAL_MUSIC_PLAYER_ENABLED = false;
+                        SharedVars.ALL_TOASTS_MUSIC_DUCKING = false;
+                        SharedVars.DEFAULT_MINECRAFT_MUSIC_ENABLED = true;
                         shownVLCError = true;
                         MinecraftClient.getInstance().setScreen(new VLCNotInstalled(Text.literal("VLC not found.")));
                     }

@@ -17,10 +17,10 @@ public class SharedVars {
     public static List<SoundTrackInstance> ALL_SOUND_INSTANCES = new ArrayList<>();
     public static Double OLD_MINECRAFT_MUSIC_VAL = 1.0D;
 
-    public static Boolean MINECRAFT_MUSIC_ENABLED_LOCK_IN_CONFIG = true;
-    public static String MINECRAFT_MUSIC_ENABLED_LOCKED_BY = "Example Mod";
-    public static Boolean MINECRAFT_TOAST_MUSIC_DUCKING_LOCK_IN_CONFIG = true;
-    public static String MINECRAFT_TOAST_MUSIC_DUCKING_LOCKED_BY = "Example Mod";
+    public static Boolean MINECRAFT_MUSIC_ENABLED_LOCK_IN_CONFIG = false;
+    public static String MINECRAFT_MUSIC_ENABLED_LOCKED_BY = "Unknown Source";
+    public static Boolean MINECRAFT_TOAST_MUSIC_DUCKING_LOCK_IN_CONFIG = false;
+    public static String MINECRAFT_TOAST_MUSIC_DUCKING_LOCKED_BY = "Unknown Source";
 
     public static Integer MINECRAFT_MUSIC_FADE_DOWN = 20;
     public static Integer VLC_MUSIC_FADE_DOWN = 60;
