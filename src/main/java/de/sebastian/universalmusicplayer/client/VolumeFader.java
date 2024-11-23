@@ -15,7 +15,8 @@ public class VolumeFader {
      */
     public static void setVolumeCubic(MediaPlayer mediaPlayer, int targetVolume) {
         if (mediaPlayer == null || targetVolume < 0 || targetVolume > 100) {
-            throw new IllegalArgumentException("Invalid media player or target volume.");
+            System.err.println("Invalid media player or target volume.");
+            return;
         }
 
         // Create a separate thread for volume adjustment

@@ -1,6 +1,7 @@
 package de.sebastian.universalmusicplayer.client.screen;
 
 import com.terraformersmc.modmenu.gui.ModsScreen;
+import de.sebastian.universalmusicplayer.client.MinecraftMusicFeatures;
 import de.sebastian.universalmusicplayer.client.SharedVars;
 import de.sebastian.universalmusicplayer.client.screen.widget.NumberOnlyTextFieldWidget;
 import net.minecraft.client.MinecraftClient;
@@ -9,6 +10,7 @@ import net.minecraft.client.gui.screen.ButtonTextures;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.*;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.toast.SystemToast;
 import net.minecraft.text.Text;
 import net.minecraft.util.Formatting;
@@ -99,8 +101,8 @@ public class ConfigScreen extends Screen {
                         SystemToast.create(this.client, SystemToast.Type.NARRATOR_TOGGLE, Text.translatable("universalmusicplayer.gui.config.esc.saved.title"), Text.translatable("universalmusicplayer.gui.config.esc.saved"))
                 );
                 applyChanges();
-                this.client.setScreen(parent);
             }
+            this.client.setScreen(parent);
         }).dimensions(20, height - 30, width - 40, 20).build());
         saveQuitWidget.setTooltip(Tooltip.of(Text.translatable("universalmusicplayer.gui.config.esc.tooltip")));
 
@@ -116,7 +118,7 @@ public class ConfigScreen extends Screen {
             toastMusicDucking.active = false;
         }
 
-        testAudioDucking = addDrawableChild(new TexturedButtonWidget(width - 150, height / 2 - 60, 20, 20, new ButtonTextures(Identifier.of("universalmusicplayer", "textures/gui/audio_ducking.png"), Identifier.of("universalmusicplayer", "textures/gui/audio_ducking.png")), (btn) -> {
+        testAudioDucking = addDrawableChild(new TexturedButtonWidget(width - 150, height / 2 - 60, 20, 20, new ButtonTextures(Identifier.of("minecraft", "textures/block/deepslate.png"), Identifier.of("minecraft", "textures/block/deepslate.png")), (btn) -> {
             if(!SharedVars.MINECRAFT_TOAST_MUSIC_DUCKING_LOCK_IN_CONFIG) {
                 MinecraftClient.getInstance().setScreen(new TestAudioDucking(this));
             }
@@ -128,6 +130,9 @@ public class ConfigScreen extends Screen {
         defaultMusic = addDrawableChild(ButtonWidget.builder(getTranslatedBoolean(newDefaultMusic), (btn) -> {
             if(!SharedVars.MINECRAFT_MUSIC_ENABLED_LOCK_IN_CONFIG) {
                 newDefaultMusic = !newDefaultMusic;
+                if(!newDefaultMusic) {
+                    MinecraftMusicFeatures.stopCurrentMinecraftSounds();
+                }
             }
             btn.setMessage(getTranslatedBoolean(newDefaultMusic));
             updateMadeChangesVar();
@@ -176,6 +181,8 @@ public class ConfigScreen extends Screen {
         context.drawText(MinecraftClient.getInstance().textRenderer, Text.translatable("universalmusicplayer.config.entry.ducking_mc.title"), 40, height / 2 + 40, 0xFFFFFF, false);
 
         toolTips(context, mouseX, mouseY);
+
+        context.drawGuiTexture(RenderLayer::getGuiTextured, Identifier.of("universalmusicplayer", "textures/gui/audio_ducking.png"), 10, 10, 16, 16);
     }
 
     public void toolTips(DrawContext ctx, int mX, int mY) {

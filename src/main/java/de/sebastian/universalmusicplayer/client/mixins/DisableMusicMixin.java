@@ -20,33 +20,33 @@ public class DisableMusicMixin {
 
     @Inject(method = "Lnet/minecraft/client/sound/MusicTracker;play(Lnet/minecraft/sound/MusicSound;)V", at = @At("HEAD"), cancellable = true)
     private void redirectPlay(MusicSound musicSound, CallbackInfo ci) {
-        System.out.println("Canceled play!");
         if(!SharedVars.DEFAULT_MINECRAFT_MUSIC_ENABLED) {
             ci.cancel();
+            System.out.println("Canceled play!");
         }
     }
 
     @Inject(method = "Lnet/minecraft/client/sound/MusicTracker;stop(Lnet/minecraft/sound/MusicSound;)V", at = @At("HEAD"), cancellable = true)
     private void redirectStop(MusicSound musicSound, CallbackInfo ci) {
-        System.out.println("Canceled stop!");
         if(!SharedVars.DEFAULT_MINECRAFT_MUSIC_ENABLED) {
             ci.cancel();
+            System.out.println("Canceled stop!");
         }
     }
 
     @Inject(method = "Lnet/minecraft/client/sound/MusicTracker;stop()V", at = @At("HEAD"), cancellable = true)
     private void redirectStop(CallbackInfo ci) {
-        System.out.println("Canceled stop!");
         if(!SharedVars.DEFAULT_MINECRAFT_MUSIC_ENABLED) {
             ci.cancel();
+            System.out.println("Canceled stop!");
         }
     }
 
     @Inject(method = "Lnet/minecraft/client/sound/MusicTracker;isPlayingType(Lnet/minecraft/sound/MusicSound;)Z", at = @At("HEAD"), cancellable = true)
     private void redirectIsPlayingType(MusicSound musicSound, CallbackInfoReturnable<Boolean> cir) {
-        System.out.println("Canceled is_playing_type!");
         if(!SharedVars.DEFAULT_MINECRAFT_MUSIC_ENABLED) {
             cir.cancel();
+            System.out.println("Canceled is_playing_type!");
         }
     }
 }

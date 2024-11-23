@@ -28,6 +28,7 @@ public class TestAudioDucking extends Screen {
         super(Text.literal("Test Audio Ducking Screen"));
         audioDuckingPreviousValue = SharedVars.ALL_TOASTS_MUSIC_DUCKING;
         this.previous = previous;
+        audioInstance = SoundTrackInstance.create(100, prepareAudioFile(), true, "Test Audio Ducking");
     }
 
     public File prepareAudioFile() {
@@ -57,7 +58,6 @@ public class TestAudioDucking extends Screen {
 
     @Override
     protected void init() {
-        audioInstance = SoundTrackInstance.create(100, prepareAudioFile(), true, "Test Audio Ducking");
         SharedVars.ALL_TOASTS_MUSIC_DUCKING = true;
         addDrawableChild(ButtonWidget.builder(Text.translatable("gui.back"), (btn) -> {
             SharedVars.ALL_TOASTS_MUSIC_DUCKING = audioDuckingPreviousValue;
@@ -77,7 +77,7 @@ public class TestAudioDucking extends Screen {
                 shouldCountDown = false;
                 ticksLeft = 100;
             }
-        }).dimensions(20, height - 30, width - 40, 20).build());
+        }).dimensions(20, height / 2 - 10, width - 40, 20).build());
     }
 
     @Override
