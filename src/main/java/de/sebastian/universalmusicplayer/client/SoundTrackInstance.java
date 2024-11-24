@@ -1,5 +1,6 @@
 package de.sebastian.universalmusicplayer.client;
 
+import de.sebastian.universalmusicplayer.UniversalMusicPlayer;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
 import java.io.File;
@@ -31,7 +32,7 @@ public class SoundTrackInstance {
      * @return New SoundTrackInstance.
      * */
     public static SoundTrackInstance create(int volume, File soundTrack, Boolean respectsSharedVars_ALL_TOASTS_MUSIC_DUCKING, String name) {
-        SoundTrackInstance instance = new SoundTrackInstance(soundTrack, name + "-" + UUID.randomUUID().toString(), respectsSharedVars_ALL_TOASTS_MUSIC_DUCKING).setInitVol(volume);
+        SoundTrackInstance instance = new SoundTrackInstance(soundTrack, name + "/" + UUID.randomUUID().toString(), respectsSharedVars_ALL_TOASTS_MUSIC_DUCKING).setInitVol(volume);
         if(respectsSharedVars_ALL_TOASTS_MUSIC_DUCKING) {
             SharedVars.RESPECT_TOAST_DUCKING.add(instance);
         }
@@ -39,7 +40,7 @@ public class SoundTrackInstance {
         instance.getMediaPlayer().controls().setTime(0);
         instance.getMediaPlayer().controls().setPosition(0);
         instance.getMediaPlayer().media().startPaused(soundTrack.getAbsolutePath());
-        System.out.println("Preparing: " + soundTrack.getAbsolutePath());
+        UniversalMusicPlayer.LOGGER.info("Preparing: " + soundTrack.getAbsolutePath());
         return instance;
     }
 
@@ -107,6 +108,10 @@ public class SoundTrackInstance {
             if(SharedVars.RESPECT_TOAST_DUCKING.contains(this)) {
                 SharedVars.RESPECT_TOAST_DUCKING.remove(this);
             }
+        }
+
+        if(SharedVars.ALL_SOUND_INSTANCES.contains(this)) {
+            SharedVars.ALL_SOUND_INSTANCES.remove(this);
         }
         destroyed = true;
         mediaPlayer.release();

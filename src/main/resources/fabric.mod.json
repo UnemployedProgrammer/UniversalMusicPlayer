@@ -5,7 +5,11 @@
   "name": "UniversalMusicPlayer",
   "description": "Used to play music files easily on client.",
   "authors": ["1306_sebastian (aka UnemployedProgrammer)"],
-  "contact": {},
+  "contact": {
+    "homepage": "https://github.com/UnemployedProgrammer/UniversalMusicPlayer/",
+    "issues": "https://github.com/UnemployedProgrammer/UniversalMusicPlayer/issues",
+    "sources": "https://github.com/UnemployedProgrammer/UniversalMusicPlayer/"
+  },
   "license": "MIT",
   "icon": "assets/universalmusicplayer/icon.png",
   "environment": "client",
@@ -28,14 +32,8 @@
   },
   "custom": {
     "modmenu": {
-      "links": {
-      },
       "badges": [ "library" ],
-      "update_checker": false,
-      "contact": {
-        "issues": "https://github.com/UnemployedProgrammer/UniversalMusicPlayer/issues",
-        "sources": "https://github.com/UnemployedProgrammer/UniversalMusicPlayer/"
-      }
+      "update_checker": false
     }
   }
 }

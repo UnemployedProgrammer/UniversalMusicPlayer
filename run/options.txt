@@ -12,7 +12,7 @@ darknessEffectScale:1.0
 glintSpeed:0.5
 glintStrength:0.75
 prioritizeChunkUpdates:0
-fullscreen:false
+fullscreen:true
 gamma:0.5
 graphicsMode:1
 guiScale:0
@@ -51,8 +51,8 @@ damageTiltStrength:1.0
 highContrast:false
 highContrastBlockOutline:false
 narratorHotkey:true
-resourcePacks:["fabric"]
-incompatibleResourcePacks:[]
+resourcePacks:["vanilla","fabric"]
+incompatibleResourcePacks:["universalmusicplayer"]
 lastServer:
 lang:en_us
 chatVisibility:0
@@ -126,7 +126,7 @@ key_key.hotbar.9:key.keyboard.9
 key_key.examplemod.spook:key.keyboard.r
 key_key.modmenu.open_menu:key.keyboard.unknown
 soundCategory_master:1.0
-soundCategory_music:1.0
+soundCategory_music:0.2
 soundCategory_record:1.0
 soundCategory_weather:1.0
 soundCategory_block:1.0

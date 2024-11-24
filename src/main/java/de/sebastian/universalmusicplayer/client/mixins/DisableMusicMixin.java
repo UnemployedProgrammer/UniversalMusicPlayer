@@ -22,7 +22,7 @@ public class DisableMusicMixin {
     private void redirectPlay(MusicSound musicSound, CallbackInfo ci) {
         if(!SharedVars.DEFAULT_MINECRAFT_MUSIC_ENABLED) {
             ci.cancel();
-            System.out.println("Canceled play!");
+            //System.out.println("Canceled play!");
         }
     }
 
@@ -30,7 +30,7 @@ public class DisableMusicMixin {
     private void redirectStop(MusicSound musicSound, CallbackInfo ci) {
         if(!SharedVars.DEFAULT_MINECRAFT_MUSIC_ENABLED) {
             ci.cancel();
-            System.out.println("Canceled stop!");
+            //System.out.println("Canceled stop!");
         }
     }
 
@@ -38,7 +38,7 @@ public class DisableMusicMixin {
     private void redirectStop(CallbackInfo ci) {
         if(!SharedVars.DEFAULT_MINECRAFT_MUSIC_ENABLED) {
             ci.cancel();
-            System.out.println("Canceled stop!");
+            //System.out.println("Canceled stop!");
         }
     }
 
@@ -46,7 +46,7 @@ public class DisableMusicMixin {
     private void redirectIsPlayingType(MusicSound musicSound, CallbackInfoReturnable<Boolean> cir) {
         if(!SharedVars.DEFAULT_MINECRAFT_MUSIC_ENABLED) {
             cir.cancel();
-            System.out.println("Canceled is_playing_type!");
+            //System.out.println("Canceled is_playing_type!");
         }
     }
 }

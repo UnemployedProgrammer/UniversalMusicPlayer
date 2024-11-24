@@ -1,5 +1,6 @@
 package de.sebastian.universalmusicplayer.client.screen;
 
+import de.sebastian.universalmusicplayer.UniversalMusicPlayer;
 import de.sebastian.universalmusicplayer.client.SharedVars;
 import de.sebastian.universalmusicplayer.client.SoundTrackInstance;
 import net.minecraft.client.MinecraftClient;
@@ -41,7 +42,7 @@ public class TestAudioDucking extends Screen {
 
         try (InputStream inputStream = getClass().getResourceAsStream("/assets/universalmusicplayer/" + assetPath)) {
             if (inputStream == null) {
-                System.err.println("Asset file not found: " + assetPath);
+                UniversalMusicPlayer.LOGGER.error("Asset file not found: " + assetPath);
                 return new File("");
             }
 
@@ -51,7 +52,7 @@ public class TestAudioDucking extends Screen {
             // Copy the file
             Files.copy(inputStream, targetPath, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            System.err.println("Failed to copy file: " + e.getMessage());
+            UniversalMusicPlayer.LOGGER.error("Failed to copy file: " + e.getMessage());
         }
         return new File(mcDir, "test_audio_ducking.mp3");
     }

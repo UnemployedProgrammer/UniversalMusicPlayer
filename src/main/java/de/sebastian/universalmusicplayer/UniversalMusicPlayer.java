@@ -1,6 +1,8 @@
 package de.sebastian.universalmusicplayer;
 
+import de.sebastian.universalmusicplayer.client.ConfigSaver;
 import de.sebastian.universalmusicplayer.client.SharedVars;
+import de.sebastian.universalmusicplayer.client.SoundTrackInstance;
 import de.sebastian.universalmusicplayer.client.UseDestroyedMediaPlayerExpection;
 import de.sebastian.universalmusicplayer.client.screen.TestScreen;
 import de.sebastian.universalmusicplayer.client.screen.VLCNotInstalled;
@@ -14,16 +16,21 @@ import net.minecraft.client.gui.screen.TitleScreen;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.text.Text;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.lwjgl.glfw.GLFW;
 import uk.co.caprica.vlcj.factory.discovery.NativeDiscovery;
 
 public class UniversalMusicPlayer implements ModInitializer {
 
+    public static final Logger LOGGER = LogManager.getLogger();
+    
     private Boolean shownVLCError = false;
     private static KeyBinding keyBinding;
 
     @Override
     public void onInitialize() {
+
         ScreenEvents.AFTER_INIT.register(((minecraftClient, screen, i, i1) -> {
             if(!shownVLCError) {
                 if(screen instanceof TitleScreen) {
@@ -52,5 +59,26 @@ public class UniversalMusicPlayer implements ModInitializer {
                 }
             });
         }
+
+        LOGGER.info("Initializing Universal Music Player...");
+        LOGGER.info("Loading Config...");
+        ConfigSaver.Config config = ConfigSaver.loadConfig();
+        if(config != null) {
+            config.setReason("Initializing Mod");
+
+            SharedVars.DEFAULT_MINECRAFT_MUSIC_ENABLED = config.defaultMinecraftMusicEnabled;
+            SharedVars.ALL_TOASTS_MUSIC_DUCKING = config.ToastMusicDucking;
+            SharedVars.MINECRAFT_MUSIC_FADE_DOWN = config.MinecraftMusicDucking;
+            SharedVars.VLC_MUSIC_FADE_DOWN = config.VLCDucking;
+
+            LOGGER.info(config.toString());
+
+            LOGGER.info("Config Loaded!");
+
+        } else {
+            LOGGER.warn("Couldn't load config due to the config file not being there or several other reasons. This could be due to starting your minecraft instance with this mod the first time.");
+        }
+        LOGGER.info("Successfully Initialized Universal Music Player!");
+
     }
 }

@@ -28,7 +28,7 @@ public class ConfigScreen extends Screen {
     private Integer newDuckingVLCMusic = SharedVars.VLC_MUSIC_FADE_DOWN;
 
     private ButtonWidget toastMusicDucking;
-    private TexturedButtonWidget testAudioDucking;
+    private ButtonWidget testAudioDucking;
     private ButtonWidget defaultMusic;
     private NumberOnlyTextFieldWidget duckingMinecraft;
     private NumberOnlyTextFieldWidget duckingVLC;
@@ -118,11 +118,11 @@ public class ConfigScreen extends Screen {
             toastMusicDucking.active = false;
         }
 
-        testAudioDucking = addDrawableChild(new TexturedButtonWidget(width - 150, height / 2 - 60, 20, 20, new ButtonTextures(Identifier.of("minecraft", "textures/block/deepslate.png"), Identifier.of("minecraft", "textures/block/deepslate.png")), (btn) -> {
-            if(!SharedVars.MINECRAFT_TOAST_MUSIC_DUCKING_LOCK_IN_CONFIG) {
+        testAudioDucking = addDrawableChild(ButtonWidget.builder(Text.literal(""), (btn) -> {
+            if (!SharedVars.MINECRAFT_TOAST_MUSIC_DUCKING_LOCK_IN_CONFIG) {
                 MinecraftClient.getInstance().setScreen(new TestAudioDucking(this));
             }
-        }));
+        }).dimensions(width - 150, height / 2 - 60, 20, 20).build());
         if(SharedVars.MINECRAFT_TOAST_MUSIC_DUCKING_LOCK_IN_CONFIG) {
             testAudioDucking.active = false;
         }
@@ -140,12 +140,6 @@ public class ConfigScreen extends Screen {
         if(SharedVars.MINECRAFT_MUSIC_ENABLED_LOCK_IN_CONFIG) {
             defaultMusic.active = false;
         }
-
-        duckingMinecraft = addDrawableChild(new NumberOnlyTextFieldWidget(width - 120, height / 2, 100, 20, Text.literal("20"), 0, 100));
-        duckingMinecraft.setChangedListener(value -> {
-            newDuckingMinecraftMusic = Math.clamp(duckingMinecraft.getIntValue(), 0, 100);
-            updateMadeChangesVar();
-        });
 
         duckingVLC = addDrawableChild(new NumberOnlyTextFieldWidget(width - 120, height / 2, 100, 20, Text.literal("60"), 0, 100));
         duckingVLC.setChangedListener(value -> {
@@ -171,6 +165,8 @@ public class ConfigScreen extends Screen {
         super.render(context, mouseX, mouseY, delta);
         context.drawCenteredTextWithShadow(MinecraftClient.getInstance().textRenderer, Text.translatable("universalmusicplayer.gui.config.title"), width / 2, 10, 0xFFFFFF);
 
+        context.drawTexture(RenderLayer::getGuiTextured, Identifier.of("universalmusicplayer","audio_ducking.png"), width - 148, height / 2 - 58, 0, 0, 16, 16, 16, 16);
+
         //Titles
 
         blurDisabledValues(context);
@@ -181,8 +177,6 @@ public class ConfigScreen extends Screen {
         context.drawText(MinecraftClient.getInstance().textRenderer, Text.translatable("universalmusicplayer.config.entry.ducking_mc.title"), 40, height / 2 + 40, 0xFFFFFF, false);
 
         toolTips(context, mouseX, mouseY);
-
-        context.drawGuiTexture(RenderLayer::getGuiTextured, Identifier.of("universalmusicplayer", "textures/gui/audio_ducking.png"), 10, 10, 16, 16);
     }
 
     public void toolTips(DrawContext ctx, int mX, int mY) {

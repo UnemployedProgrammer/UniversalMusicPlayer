@@ -1,5 +1,6 @@
 package de.sebastian.universalmusicplayer.client;
 
+import de.sebastian.universalmusicplayer.UniversalMusicPlayer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.sound.SoundCategory;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
@@ -15,7 +16,7 @@ public class VolumeFader {
      */
     public static void setVolumeCubic(MediaPlayer mediaPlayer, int targetVolume) {
         if (mediaPlayer == null || targetVolume < 0 || targetVolume > 100) {
-            System.err.println("Invalid media player or target volume.");
+            UniversalMusicPlayer.LOGGER.error("Invalid media player or target volume.");
             return;
         }
 

@@ -1,5 +1,6 @@
 package de.sebastian.universalmusicplayer.client;
 
+import de.sebastian.universalmusicplayer.UniversalMusicPlayer;
 import uk.co.caprica.vlcj.factory.MediaPlayerFactory;
 import uk.co.caprica.vlcj.player.base.MediaPlayer;
 
@@ -21,7 +22,7 @@ public class VLCManager {
             if (mediaPlayer != null) {
                 mediaPlayer.release();
                 mediaPlayer = null;
-                System.out.println("Media player instance deleted");
+                UniversalMusicPlayer.LOGGER.info("Media player instance deleted");
             }
         }
     }
